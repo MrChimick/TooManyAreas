@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -9,9 +8,9 @@ namespace TooManyAreas
     {
         private static IEnumerable<Widgets.DropdownMenuElement<Area>> Button_GenerateMenu(Pawn pawn)
         {
-            yield return new Widgets.DropdownMenuElement<Area>()
+            yield return new Widgets.DropdownMenuElement<Area>
             {
-                option = new FloatMenuOption(AreaUtility.AreaAllowedLabel_Area(null), (Action) (() => pawn.playerSettings.AreaRestriction = null)),
+                option = new FloatMenuOption(AreaUtility.AreaAllowedLabel_Area(null), () => pawn.playerSettings.AreaRestriction = null),
                 payload = null
             };
             foreach (Area area in Find.CurrentMap.areaManager.AllAreas)
@@ -19,9 +18,9 @@ namespace TooManyAreas
                 Area a = area;
                 if (area != pawn.playerSettings.AreaRestriction && area.AssignableAsAllowed())
                 {
-                    yield return new Widgets.DropdownMenuElement<Area>()
+                    yield return new Widgets.DropdownMenuElement<Area>
                     {
-                        option = new FloatMenuOption(a.Label, (Action) (() => pawn.playerSettings.AreaRestriction = a), mouseoverGuiAction: ((Action) (() => a.MarkForDraw()))),
+                        option = new FloatMenuOption(a.Label, () => pawn.playerSettings.AreaRestriction = a, mouseoverGuiAction: (rect) => a.MarkForDraw()),
                         payload = a
                     };
                 }
@@ -36,7 +35,7 @@ namespace TooManyAreas
             Texture2D fillTex = !flag ? BaseContent.GreyTex : pawn.playerSettings.EffectiveAreaRestriction.ColorTexture;
             string label = AreaUtility.AreaAllowedLabel(pawn);
             Rect rectRow = rect.ContractedBy(2f);
-            Widgets.Dropdown<Pawn, Area>(rectRow, pawn, (Func<Pawn, Area>) (p => (pawn.playerSettings != null && pawn.playerSettings.EffectiveAreaRestriction != null) ? p.playerSettings.EffectiveAreaRestriction : null), Button_GenerateMenu, label, fillTex, dragLabel: label, paintable: true);
+            Widgets.Dropdown(rectRow, pawn, p => (pawn.playerSettings != null && pawn.playerSettings.EffectiveAreaRestriction != null) ? p.playerSettings.EffectiveAreaRestriction : null, Button_GenerateMenu, label, fillTex, dragLabel: label, paintable: true);
 
             if (Mouse.IsOver(rectRow))
             {
