@@ -31,9 +31,9 @@ namespace TooManyAreas
         {
             if (pawn.playerSettings == null) return true;
 
-            bool flag = (pawn?.playerSettings.AreaRestriction != null);
+            bool flag = ((pawn?.playerSettings.AreaRestriction != null) && (Find.CurrentMap.areaManager.AllAreas.Contains(pawn.playerSettings.AreaRestriction)));
             Texture2D fillTex = !flag ? BaseContent.GreyTex : pawn.playerSettings.AreaRestriction.ColorTexture;
-            string label = !flag ? AreaUtility.AreaAllowedLabel(pawn) : pawn.playerSettings.AreaRestriction.Label;
+            string label = !flag ? AreaUtility.AreaAllowedLabel_Area(null) : pawn.playerSettings.AreaRestriction.Label;
             Rect rectRow = rect.ContractedBy(2f);
             Widgets.Dropdown(rectRow, pawn, p => flag ? p.playerSettings.AreaRestriction : null, Button_GenerateMenu, label, fillTex, dragLabel: label, paintable: true);
 
