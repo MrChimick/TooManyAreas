@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Manifest>
     <identifier>TooManyAreas</identifier>
-    <version>1.1</version>
+    <version>1.2</version>
     <manifestUri>https://github.com/MrChimick/TooManyAreas/raw/master/About/Manifest.xml</manifestUri>
     <downloadUri>https://github.com/MrChimick/TooManyAreas/releases/latest</downloadUri>
     <suggests>

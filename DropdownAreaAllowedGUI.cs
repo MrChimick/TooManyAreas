@@ -31,16 +31,16 @@ namespace TooManyAreas
         {
             if (pawn.playerSettings == null) return true;
 
-            bool flag = (pawn.playerSettings != null && pawn.playerSettings.EffectiveAreaRestriction != null);
-            Texture2D fillTex = !flag ? BaseContent.GreyTex : pawn.playerSettings.EffectiveAreaRestriction.ColorTexture;
-            string label = AreaUtility.AreaAllowedLabel(pawn);
+            bool flag = (pawn?.playerSettings.AreaRestriction != null);
+            Texture2D fillTex = !flag ? BaseContent.GreyTex : pawn.playerSettings.AreaRestriction.ColorTexture;
+            string label = !flag ? AreaUtility.AreaAllowedLabel(pawn) : pawn.playerSettings.AreaRestriction.Label;
             Rect rectRow = rect.ContractedBy(2f);
-            Widgets.Dropdown(rectRow, pawn, p => (pawn.playerSettings != null && pawn.playerSettings.EffectiveAreaRestriction != null) ? p.playerSettings.EffectiveAreaRestriction : null, Button_GenerateMenu, label, fillTex, dragLabel: label, paintable: true);
+            Widgets.Dropdown(rectRow, pawn, p => flag ? p.playerSettings.AreaRestriction : null, Button_GenerateMenu, label, fillTex, dragLabel: label, paintable: true);
 
             if (Mouse.IsOver(rectRow))
             {
                 GUI.DrawTexture(rect, BaseContent.WhiteTex);
-                if (flag) pawn.playerSettings.EffectiveAreaRestriction.MarkForDraw();
+                if (flag) pawn.playerSettings.AreaRestriction.MarkForDraw();
             }
             GUI.DrawTexture(rectRow, fillTex);
             Text.Font = GameFont.Small;

@@ -22,10 +22,9 @@ namespace TooManyAreas
     {
         static bool Prefix(Rect rect, Pawn p)
         {
-            if (Find.CurrentMap == null) return true;
+            if ((Find.CurrentMap == null) || (p.playerSettings == null)) return true;
             List<Area> allAreas = Find.CurrentMap.areaManager.AllAreas;
             if ((allAreas.Count(area => area.AssignableAsAllowed()) + 1) < LoadedModManager.GetMod<TMAMod>().GetSettings<TMASettings>().transitionValue) return true;
-            if (p.playerSettings == null || !p.playerSettings.RespectsAllowedArea) return true;
 
             return DropdownAreaAllowedGUI.DrawBox(rect, p);
         }
